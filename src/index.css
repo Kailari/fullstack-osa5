@@ -4,6 +4,11 @@
     padding: 4px;
 }
 
+.blog-entry .toggle {
+    font-family: monospace;
+    font-weight: bold;
+}
+
 .notification {
     padding: 8px;
     border-radius: 5px;

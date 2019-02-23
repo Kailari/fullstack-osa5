@@ -37,7 +37,7 @@ const App = () => {
 
   const showNotification = (message, type) => {
     if (notification) {
-      clearTimeout(notification.timeoutID);
+      clearTimeout(notification.timeoutID)
     }
 
     let timeoutID = setTimeout(() => setNotification(null), NOTIFICATION_TIMEOUT)
@@ -115,8 +115,8 @@ const App = () => {
     <>
       <h2>Login</h2>
       <Togglable buttonLabel="Login" ref={loginFormRef}>
-        <LoginForm 
-          login={login} 
+        <LoginForm
+          login={login}
           username={username}
           setUsername={setUsername}
           password={password}

@@ -1,4 +1,5 @@
 import React, { useState, useImperativeHandle } from 'react'
+import PropTypes from 'prop-types'
 
 const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }, ref) => {
   const [visible, setVisible] = useState(false)
@@ -27,7 +28,9 @@ const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }, ref) => {
 
   return (
     <div className="blog-entry">
-      <span onClick={toggleVisibility}>{blog.title} by {blog.author}</span>
+      <div onClick={toggleVisibility}>
+        <span className="toggle">{visible ? '-' : '+'}</span> {blog.title} by {blog.author}
+      </div>
       <div style={showWhenVisible}>
         URL: <a target="_blank" rel="noopener noreferrer" href={blog.url}>{blog.url}</a><br />
         Likes: {blog.likes} <button onClick={like}>Like</button><br />
@@ -37,5 +40,12 @@ const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }, ref) => {
     </div>
   )
 })
+
+Blog.propTypes = {
+  user: PropTypes.object,
+  blog: PropTypes.object.isRequired,
+  addLike: PropTypes.func.isRequired,
+  removeBlog: PropTypes.func.isRequired,
+}
 
 export default Blog
