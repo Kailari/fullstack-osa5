@@ -1,0 +1,21 @@
+.blog-entry {
+    border: 1px solid black;
+    margin: 2px;
+    padding: 4px;
+}
+
+.notification {
+    padding: 8px;
+    border-radius: 5px;
+    border: 2px solid darkgray;
+    font: 15px arial, sans-serif;
+    color: lightgrey;
+}
+
+.notification.error {
+    background-color: crimson;
+}
+
+.notification.ok {
+    background-color: green;
+}
