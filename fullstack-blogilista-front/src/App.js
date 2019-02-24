@@ -11,8 +11,8 @@ const NOTIFICATION_TIMEOUT = 3000
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const username = useField('')
-  const password = useField('')
+  const username = useField('text')
+  const password = useField('text')
   const [notification, setNotification] = useState(null)
   const [user, setUser] = useState(null)
 

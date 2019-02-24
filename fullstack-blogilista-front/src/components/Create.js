@@ -3,9 +3,9 @@ import { useField } from '../hooks'
 import PropTypes from 'prop-types'
 
 const CreateForm = ({ addBlog }) => {
-  const title = useField('')
-  const author = useField('')
-  const url = useField('')
+  const title = useField('text')
+  const author = useField('text')
+  const url = useField('text')
 
   const handleCreate = async (event) => {
     event.preventDefault()
