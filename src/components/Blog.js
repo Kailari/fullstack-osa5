@@ -28,10 +28,10 @@ const Blog = React.forwardRef(({ user, blog, addLike, removeBlog }, ref) => {
 
   return (
     <div className="blog-entry">
-      <div onClick={toggleVisibility}>
+      <div onClick={toggleVisibility} className="title">
         <span className="toggle">{visible ? '-' : '+'}</span> {blog.title} by {blog.author}
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className="details">
         URL: <a target="_blank" rel="noopener noreferrer" href={blog.url}>{blog.url}</a><br />
         Likes: {blog.likes} <button onClick={like}>Like</button><br />
         Added by {blog.user.username}<br />

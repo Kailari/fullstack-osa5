@@ -1,38 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useField } from '../hooks'
 import PropTypes from 'prop-types'
 
 const CreateForm = ({ addBlog }) => {
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  const title = useField('')
+  const author = useField('')
+  const url = useField('')
 
   const handleCreate = async (event) => {
     event.preventDefault()
 
-    if (await addBlog({ title, author, url })) {
-      setTitle('')
-      setAuthor('')
-      setUrl('')
+    const newBlog = {
+      title: title.value,
+      author: author.value,
+      url: url.value
+    }
+
+    if (await addBlog(newBlog)) {
+      title.reset()
+      author.reset()
+      url.reset()
     }
   }
 
   return (
     <form onSubmit={handleCreate}>
-      Title: <input
-        type="text"
-        value={title}
-        name="Title"
-        onChange={({ target }) => setTitle(target.value)} /><br />
-      Author: <input
-        type="text"
-        value={author}
-        name="Author"
-        onChange={({ target }) => setAuthor(target.value)} /><br />
-      URL: <input
-        type="text"
-        value={url}
-        name="URL"
-        onChange={({ target }) => setUrl(target.value)} /><br />
+      Title: <input name="Title" {...title} reset={undefined} /><br />
+      Author: <input name="Author" {...author} reset={undefined} /><br />
+      URL: <input name="URL" {...url} reset={undefined} /><br />
       <button type="submit">Create</button>
     </form>
   )

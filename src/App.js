@@ -5,17 +5,17 @@ import Togglable from './components/Togglable'
 import CreateForm from './components/Create'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { useField } from './hooks'
 
 const NOTIFICATION_TIMEOUT = 3000
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const username = useField('')
+  const password = useField('')
   const [notification, setNotification] = useState(null)
   const [user, setUser] = useState(null)
 
-  const loginFormRef = React.createRef()
   const createBlogFormRef = React.createRef()
 
 
@@ -44,20 +44,20 @@ const App = () => {
     setNotification({ message, type, timeoutID })
   }
 
-  const login = async (username, password) => {
+  const login = async () => {
     try {
       const user = await loginService.login({
-        username, password,
+        username: username.value, password: password.value,
       })
 
       blogService.setToken(user.token)
       window.localStorage.setItem(
         'loggedBlogListUser', JSON.stringify(user)
       )
-      showNotification(`User '${username}' logged in`, 'ok')
+      showNotification(`User '${username.value}' logged in`, 'ok')
 
-      setUsername('')
-      setPassword('')
+      username.reset()
+      password.reset()
       setUser(user)
     } catch (error) {
       showNotification('Invalid username or password', 'error')
@@ -90,7 +90,7 @@ const App = () => {
       const blog = blogs.find(b => b.id === id)
       const changedBlog = { ...blog, likes: blog.likes + 1 }
 
-      const updatedBlog = await blogService.update(changedBlog)
+      const updatedBlog = await blogService.update({ ...changedBlog, user: changedBlog.user._id })
       setBlogs(blogs.map(b => b.id !== id ? b : updatedBlog))
     } catch (error) {
       showNotification(`Error adding like: ${error.message}`, 'error')
@@ -112,50 +112,34 @@ const App = () => {
   }
 
   const loginForm = () => (
-    <>
+    <div className="login-form">
       <h2>Login</h2>
-      <Togglable buttonLabel="Login" ref={loginFormRef}>
-        <LoginForm
-          login={login}
-          username={username}
-          setUsername={setUsername}
-          password={password}
-          setPassword={setPassword} />
-      </Togglable>
-    </>
+      <LoginForm
+        login={login}
+        username={username}
+        password={password} />
+    </div>
   )
 
   const userInfo = () => (
-    <>
+    <div className="user-info">
       <h2>Logged in as</h2>
       <div>Username: {user.username}</div>
-      <button onClick={logout}>Logout </button>
-    </>
+      <button onClick={logout}>Logout</button>
+    </div>
   )
 
   const newBlogForm = () => (
-    <>
+    <div className="create-form">
       <h2>Add new blog</h2>
       <Togglable buttonLabel="Create new" ref={createBlogFormRef}>
         <CreateForm addBlog={addBlog} />
       </Togglable>
-    </>
-  )
-
-  const notificationDisplay = () => (
-    <div className={`notification ${notification.type}`}>
-      {notification.message}
     </div>
   )
 
-
-  return (
-    <div>
-      {notification && notificationDisplay()}
-
-      {user ? userInfo() : loginForm()}
-      {user && newBlogForm()}
-
+  const blogList = () => (
+    <div className="blog-list">
       <h2>blogs</h2>
       {blogs.sort((a, b) => b.likes - a.likes).map(blog =>
         <Blog
@@ -166,6 +150,24 @@ const App = () => {
           removeBlog={removeBlog} />
       )}
     </div>
+  )
+
+  const notificationDisplay = () => (
+    <div className={`notification ${notification.type}`}>
+      {notification.message}
+    </div>
+  )
+
+
+  return (
+    <>
+      {notification && notificationDisplay()}
+
+      {user ? userInfo() : loginForm()}
+      {user && newBlogForm()}
+
+      {user && blogList()}
+    </>
   )
 }
 
