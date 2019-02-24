@@ -1,0 +1,45 @@
+{
+  "notes": [
+    {
+      "content": "custom-hookit aivan mahtavia",
+      "id": 1
+    },
+    {
+      "content": "paras feature ikinä <3",
+      "id": 2
+    },
+    {
+      "content": "jee",
+      "id": 3
+    },
+    {
+      "content": "asd",
+      "id": 4
+    },
+    {
+      "content": "ok",
+      "id": 5
+    },
+    {
+      "content": "hahaaa!",
+      "id": 6
+    }
+  ],
+  "persons": [
+    {
+      "name": "mluukkai",
+      "number": "040-5483923",
+      "id": 1
+    },
+    {
+      "name": "Nimi",
+      "number": "044-13123",
+      "id": 2
+    },
+    {
+      "name": "Jaska Jokunen",
+      "number": "044-meekotiis",
+      "id": 3
+    }
+  ]
+}
